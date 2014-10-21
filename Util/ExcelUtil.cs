@@ -10,9 +10,9 @@ using System.Drawing;
 using System.Text.RegularExpressions;
 using System.Text;
 
-namespace INAnswer.Service
+namespace SL.Util
 {
-    public class ExcelService
+    public class ExcelUtil
     {
         public static string ExcelToHtml(string excelFileName)
         {
