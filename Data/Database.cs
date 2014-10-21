@@ -30,7 +30,7 @@ namespace SL.Data
 
         public static Database Open()
         {
-            return Open("XX_PhotoPrint");
+            return Open("Database");
         }
 
         public static Database Open(string name)
