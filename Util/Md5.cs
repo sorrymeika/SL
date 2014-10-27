@@ -5,7 +5,7 @@ using System.Web;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace INAnswer.Service
+namespace SL.Util
 {
     public class Md5
     {
@@ -21,7 +21,7 @@ namespace INAnswer.Service
 
         public static string MD5(string str)
         {
-            return EncryptMD5ToHexString(str, System.Text.Encoding.UTF8.CodePage);
+            return EncryptMD5ToHexString(str, System.Text.Encoding.UTF8.CodePage).ToUpper();
         }
         public static string EncryptMD5ToHexString(string s, int EncodingCodePage)
         {
