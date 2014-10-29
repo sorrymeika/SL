@@ -32,5 +32,18 @@ namespace SL.Util
                 HttpContext.Current.Response.Write("<script>window.parent." + callback + "(" + Json.Encode(obj) + ");</script>");
             }
         }
+
+        public static void IFrameResult(dynamic obj)
+        {
+            string callback = HttpContext.Current.Request.QueryString["callback"] ?? HttpContext.Current.Request.Form["callback"];
+            if (string.IsNullOrEmpty(callback))
+            {
+                HttpContext.Current.Response.Write(Json.Encode(obj));
+            }
+            else
+            {
+                HttpContext.Current.Response.Write("<script>window.parent." + callback + "(" + Json.Encode(obj) + ");</script>");
+            }
+        }
     }
 }

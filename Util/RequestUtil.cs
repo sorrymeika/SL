@@ -342,6 +342,20 @@ namespace SL.Util
             System.IO.File.Delete(savePath);
         }
 
+        public static string FullUrl(string src)
+        {
+            var url = System.Web.HttpContext.Current.Request.Url;
+
+            return "http://" + url.Authority + "/" + src;
+        }
+
+        public static string ReplaceContent(string content)
+        {
+            var url = System.Web.HttpContext.Current.Request.Url;
+
+            return System.Text.RegularExpressions.Regex.Replace(content, @"src=""/", "src=\"http://" + url.Authority + "/", System.Text.RegularExpressions.RegexOptions.IgnoreCase);
+        }
+
         public string Save()
         {
             if (!isEmpty)
