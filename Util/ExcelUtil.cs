@@ -9,6 +9,7 @@ using System.IO;
 using System.Drawing;
 using System.Text.RegularExpressions;
 using System.Text;
+using SL.Data;
 
 namespace SL.Util
 {
@@ -80,6 +81,58 @@ namespace SL.Util
             return savefilename.ToString();
         }
 
+        /**/
+        /// <summary>
+        /// 执行导出
+        /// </summary>
+        /// <param name="ds">要导出的DataSet</param>
+        /// <param name="strExcelFileName">要导出的文件名</param>
+        public static void doExport(IList<dynamic> data, string strExcelFileName)
+        {
+            if (data.Count == 0) return;
+
+            Excel.Application excel = new Excel.Application();
+
+            //            Excel.Workbook obj=new Excel.WorkbookClass();
+            //            obj.SaveAs("c:\zn.xls",Excel.XlFileFormat.xlExcel9795,null,null,false,false,Excel.XlSaveAsAccessMode.xlNoChange,null,null,null,null);
+
+            int rowIndex = 1;
+            int colIndex = 0;
+
+            excel.Application.Workbooks.Add(true);
+
+            foreach (var col in data[0])
+            {
+                colIndex++;
+                excel.Cells[1, colIndex] = col.Key;
+            }
+
+            foreach (var row in data)
+            {
+                rowIndex++;
+                colIndex = 0;
+                foreach (var col in row)
+                {
+                    colIndex++;
+                    excel.Cells[rowIndex, colIndex] = col.Value.ToString();
+                }
+            }
+            excel.Visible = false;
+            //excel.Sheets[0] = "sss";
+
+            if (File.Exists(strExcelFileName))
+            {
+                File.Delete(strExcelFileName);
+            }
+
+            excel.ActiveWorkbook.SaveAs(strExcelFileName);
+
+
+            excel.Quit();
+            excel = null;
+
+            GC.Collect();//垃圾回收
+        }
 
         public static string Import(string excelPath, string contentDir, out bool resultFlag)
         {
