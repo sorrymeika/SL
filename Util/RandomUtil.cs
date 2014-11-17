@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace INAnswer.Service
+namespace SL.Util
 {
     public class RandomUtil
     {
         private static readonly string[] allCharArray = new string[] { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "S", "Y", "Z" };
+        private static readonly string[] allNumberArray = new string[] { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 
         public static string i2s(int number)
         {
@@ -51,6 +52,31 @@ namespace INAnswer.Service
 
                 temp = t;
                 randomCode += allCharArray[t];
+            }
+            return randomCode;
+        }
+
+        public static string CreateNumbers(int numberCount)
+        {
+            string randomCode = "";
+            int temp = -1;
+            Random rand = new Random();
+            for (int i = 0; i < numberCount; i++)
+            {
+                if (temp != -1)
+                {
+                    rand = new Random(temp * i * ((int)DateTime.Now.Ticks));
+                }
+
+                int t = rand.Next(allNumberArray.Length - 1);
+
+                while (temp == t)
+                {
+                    t = rand.Next(allNumberArray.Length - 1);
+                }
+
+                temp = t;
+                randomCode += allNumberArray[t];
             }
             return randomCode;
         }
