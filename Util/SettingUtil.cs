@@ -36,7 +36,7 @@ namespace SL.Util
         public SettingUtil(string name)
         {
             this.name = name;
-            this.path = Path.Combine(HttpContext.Current.Server.MapPath("~/json"), name + ".json");
+            this.path = Path.Combine(HttpContext.Current.Server.MapPath("~/App_Data"), name + ".json");
             if (File.Exists(this.path))
             {
                 string data;
@@ -72,14 +72,25 @@ namespace SL.Util
             return data.FirstOrDefault();
         }
 
-        public void Add(T item)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="item"></param>
+        /// <param name="idPropertyName">自增ID的属性名称</param>
+        public void Add(T item, string idPropertyName)
         {
             var type = item.GetType();
-            var prop = type.GetProperty("ID");
+            var prop = type.GetProperty(idPropertyName);
             if (prop != null && prop.CanRead && prop.CanWrite)
             {
                 prop.SetValue(item, data.Count == 0 ? 1 : (data.Max(a => (int)prop.GetValue(a, null)) + 1), null);
             }
+            data.Add(item);
+            save();
+        }
+
+        public void Add(T item)
+        {
             data.Add(item);
             save();
         }

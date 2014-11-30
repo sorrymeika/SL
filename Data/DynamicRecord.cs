@@ -13,7 +13,7 @@
     {
         private readonly Dictionary<string, object> fields;
 
-        internal DynamicRecord(Dictionary<string, object> fields)
+        public DynamicRecord(Dictionary<string, object> fields)
         {
             this.fields = fields;
             this.Columns = new List<string>(fields.Keys);
