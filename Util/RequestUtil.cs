@@ -74,7 +74,7 @@ namespace SL.Util
         {
             if (emptyAble == false && string.IsNullOrEmpty(input))
             {
-                msg = emptyText;
+                msg = emptyText ?? "参数不完整";
             }
             else if (regex != null && !string.IsNullOrEmpty(input) && !System.Text.RegularExpressions.Regex.IsMatch(input, regex))
             {
@@ -135,6 +135,11 @@ namespace SL.Util
                 errors.Add(name, msg);
             }
             return value;
+        }
+
+        public String Email(string name, bool emptyAble = true, String emptyText = null)
+        {
+            return this.String(name, emptyAble, emptyText, @"^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$", "邮箱地址格式错误");
         }
 
         public string Password(string name,
@@ -344,6 +349,8 @@ namespace SL.Util
 
         public static string FullUrl(string src)
         {
+            if (src == null) return null;
+
             var url = System.Web.HttpContext.Current.Request.Url;
 
             return "http://" + url.Authority + "/" + src;
