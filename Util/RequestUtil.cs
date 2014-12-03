@@ -343,8 +343,11 @@ namespace SL.Util
 
         public static void Delete(string src)
         {
-            string savePath = System.Web.HttpContext.Current.Server.MapPath("~/" + src);
-            System.IO.File.Delete(savePath);
+            if (!string.IsNullOrEmpty(src))
+            {
+                string savePath = System.Web.HttpContext.Current.Server.MapPath("~/" + src);
+                System.IO.File.Delete(savePath);
+            }
         }
 
         public static string FullUrl(string src)
