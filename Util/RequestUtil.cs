@@ -139,7 +139,7 @@ namespace SL.Util
 
         public String Email(string name, bool emptyAble = true, String emptyText = null)
         {
-            return this.String(name, emptyAble, emptyText, @"^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$", "邮箱地址格式错误");
+            return this.String(name, emptyAble, emptyText, @"^[-_a-zA-Z0-9\.]+@([-_a-zA-Z0-9]+\.)+[a-zA-Z0-9]{2,3}$", "邮箱地址格式错误");
         }
 
         public string Password(string name,
