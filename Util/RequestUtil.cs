@@ -353,6 +353,7 @@ namespace SL.Util
         public static string FullUrl(string src)
         {
             if (src == null) return null;
+            if (src.StartsWith("http")) return src;
 
             var url = System.Web.HttpContext.Current.Request.Url;
 
