@@ -136,6 +136,40 @@ namespace SL.Util
             GC.Collect();//垃圾回收
         }
 
+        public static List<Dictionary<string, string>> LoadData(string excelPath, ICollection<String> map)
+        {
+            Excel.Application excel = new Excel.Application();//引用Excel对象
+            Excel.Workbook workbook = excel.Workbooks.Add(excelPath);
+            excel.UserControl = true;
+            System.Text.StringBuilder sb = new System.Text.StringBuilder();
+            excel.Visible = false;
+
+            //从1开始.
+            Excel.Worksheet sheet = workbook.Worksheets.get_Item(1) as Excel.Worksheet;
+
+            int StartRow = 2;
+            List<Dictionary<string, string>> result = new List<Dictionary<string, string>>();
+            Dictionary<string, string> data;
+            string key;
+
+            for (int row = StartRow; row <= sheet.UsedRange.Rows.Count; row++)
+            {
+                data = new Dictionary<string, string>();
+                for (int col = 1; col <= sheet.UsedRange.Columns.Count; col++)
+                {
+                    key = map.ElementAt(col - 1);
+                    Excel.Range range = sheet.Cells[row, col] as Excel.Range;
+                    data[key] = range.Text.Trim();
+                }
+                result.Add(data);
+            }
+
+            excel.Application.Workbooks.Close();
+            excel.Quit();
+
+            return result;
+        }
+
         public static string Import(string excelPath, string contentDir, out bool resultFlag)
         {
             resultFlag = false;

@@ -345,9 +345,13 @@ namespace SL.Util
         {
             if (!string.IsNullOrEmpty(src))
             {
-                string savePath = System.Web.HttpContext.Current.Server.MapPath("~/" + src);
-                System.IO.File.Delete(savePath);
+                System.IO.File.Delete(GetPath(src));
             }
+        }
+
+        public static string GetPath(string src)
+        {
+            return System.Web.HttpContext.Current.Server.MapPath("~/" + src);
         }
 
         public static string FullUrl(string src)
@@ -380,7 +384,7 @@ namespace SL.Util
             {
                 DateTime now = DateTime.Now;
                 string src = "upload/" + now.ToString("yyMMdd") + "/" + (now.Ticks - DateTime.MinValue.Ticks) + ext;
-                string savePath = System.Web.HttpContext.Current.Server.MapPath("~/" + src);
+                string savePath = GetPath(src);
 
                 string dir = Path.GetDirectoryName(savePath);
                 if (!Directory.Exists(dir))
