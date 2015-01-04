@@ -85,7 +85,7 @@ namespace SL.Util
         /// <summary>
         /// 执行导出
         /// </summary>
-        /// <param name="data">要导出的Data</param>
+        /// <param name="ds">要导出的DataSet</param>
         /// <param name="strExcelFileName">要导出的文件名</param>
         public static void Export(IList<dynamic> data, string strExcelFileName)
         {
@@ -115,7 +115,7 @@ namespace SL.Util
                 {
                     colIndex++;
                     excel.Cells[rowIndex, colIndex].NumberFormatLocal = "@";
-                    excel.Cells[rowIndex, colIndex] = row[col] == null ? "" : row[col].ToString();
+                    excel.Cells[rowIndex, colIndex] = row[col].ToString();
                 }
             }
             excel.Visible = false;
@@ -126,13 +126,48 @@ namespace SL.Util
                 File.Delete(strExcelFileName);
             }
 
+            excel.Application.Workbooks.Close();
             excel.ActiveWorkbook.SaveAs(strExcelFileName);
 
-            excel.Application.Workbooks.Close();
+
             excel.Quit();
             excel = null;
 
             GC.Collect();//垃圾回收
+        }
+
+        public static List<Dictionary<string, string>> LoadData(string excelPath, ICollection<String> map)
+        {
+            Excel.Application excel = new Excel.Application();//引用Excel对象
+            Excel.Workbook workbook = excel.Workbooks.Add(excelPath);
+            excel.UserControl = true;
+            System.Text.StringBuilder sb = new System.Text.StringBuilder();
+            excel.Visible = false;
+
+            //从1开始.
+            Excel.Worksheet sheet = workbook.Worksheets.get_Item(1) as Excel.Worksheet;
+
+            int StartRow = 2;
+            List<Dictionary<string, string>> result = new List<Dictionary<string, string>>();
+            Dictionary<string, string> data;
+            string key;
+
+            for (int row = StartRow; row <= sheet.UsedRange.Rows.Count; row++)
+            {
+                data = new Dictionary<string, string>();
+                for (int col = 1; col <= sheet.UsedRange.Columns.Count; col++)
+                {
+                    key = map.ElementAt(col - 1);
+                    Excel.Range range = sheet.Cells[row, col] as Excel.Range;
+                    data[key] = range.Text.Trim();
+                }
+                result.Add(data);
+            }
+
+            excel.Application.Workbooks.Close();
+            excel.Quit();
+
+            return result;
         }
 
         public static string Import(string excelPath, string contentDir, out bool resultFlag)

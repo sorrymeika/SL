@@ -7,16 +7,28 @@
     using System.Reflection;
     using System.Runtime.CompilerServices;
     using System.Runtime.InteropServices;
+    using System.Runtime.Serialization;
 
     [Serializable]
-    public sealed class DynamicRecord : DynamicObject, ICustomTypeDescriptor
+    public sealed class DynamicRecord : DynamicObject, ICustomTypeDescriptor, ISerializable
     {
         private readonly Dictionary<string, object> fields;
 
-        internal DynamicRecord(Dictionary<string, object> fields)
+        public DynamicRecord(Dictionary<string, object> fields)
         {
             this.fields = fields;
             this.Columns = new List<string>(fields.Keys);
+        }
+
+        internal DynamicRecord(SerializationInfo info, StreamingContext context)
+        {
+            this.fields = new Dictionary<string, object>();
+            this.Columns = new List<string>();
+            foreach (var i in info)
+            {
+                this.fields.Add(i.Name, i.Value);
+                this.Columns.Add(i.Name);
+            }
         }
 
         public override IEnumerable<string> GetDynamicMemberNames()
@@ -135,6 +147,14 @@
             set
             {
                 this.fields[name] = value;
+            }
+        }
+
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            foreach (var field in this.fields)
+            {
+                info.AddValue(field.Key, field.Value);
             }
         }
     }

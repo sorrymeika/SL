@@ -74,7 +74,7 @@ namespace SL.Util
         {
             if (emptyAble == false && string.IsNullOrEmpty(input))
             {
-                msg = emptyText;
+                msg = emptyText ?? "参数不完整";
             }
             else if (regex != null && !string.IsNullOrEmpty(input) && !System.Text.RegularExpressions.Regex.IsMatch(input, regex))
             {
@@ -135,6 +135,11 @@ namespace SL.Util
                 errors.Add(name, msg);
             }
             return value;
+        }
+
+        public String Email(string name, bool emptyAble = true, String emptyText = null)
+        {
+            return this.String(name, emptyAble, emptyText, @"^[-_a-zA-Z0-9\.]+@([-_a-zA-Z0-9]+\.)+[a-zA-Z0-9]{2,3}$", "邮箱地址格式错误");
         }
 
         public string Password(string name,
@@ -338,12 +343,22 @@ namespace SL.Util
 
         public static void Delete(string src)
         {
-            string savePath = System.Web.HttpContext.Current.Server.MapPath("~/" + src);
-            System.IO.File.Delete(savePath);
+            if (!string.IsNullOrEmpty(src))
+            {
+                System.IO.File.Delete(GetPath(src));
+            }
+        }
+
+        public static string GetPath(string src)
+        {
+            return System.Web.HttpContext.Current.Server.MapPath("~/" + src);
         }
 
         public static string FullUrl(string src)
         {
+            if (src == null) return null;
+            if (src.StartsWith("http")) return src;
+
             var url = System.Web.HttpContext.Current.Request.Url;
 
             return "http://" + url.Authority + "/" + src;
@@ -369,7 +384,7 @@ namespace SL.Util
             {
                 DateTime now = DateTime.Now;
                 string src = "upload/" + now.ToString("yyMMdd") + "/" + (now.Ticks - DateTime.MinValue.Ticks) + ext;
-                string savePath = System.Web.HttpContext.Current.Server.MapPath("~/" + src);
+                string savePath = GetPath(src);
 
                 string dir = Path.GetDirectoryName(savePath);
                 if (!Directory.Exists(dir))

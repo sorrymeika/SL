@@ -142,7 +142,7 @@ namespace SL.Data
             PrepareCommand(sql, parameters);
 
             object result = _command.ExecuteScalar();
-            if (result == null)
+            if (result == null || result == DBNull.Value)
                 return default(T);
             if (typeof(T) == typeof(bool))
                 result = Convert.ToBoolean(result);
@@ -178,7 +178,7 @@ namespace SL.Data
                                 {
                                     strArray[i] = reader.GetName(i);
                                 }
-                                item[strArray[i]] = reader[i];
+                                item[strArray[i]] = reader[i] == DBNull.Value ? null : reader[i];
                             }
                             list.Add(new DynamicRecord(item));
                         }
