@@ -85,9 +85,9 @@ namespace SL.Util
         /// <summary>
         /// 执行导出
         /// </summary>
-        /// <param name="ds">要导出的DataSet</param>
+        /// <param name="data">要导出的Data</param>
         /// <param name="strExcelFileName">要导出的文件名</param>
-        public static void doExport(IList<dynamic> data, string strExcelFileName)
+        public static void Export(IList<dynamic> data, string strExcelFileName)
         {
             if (data.Count == 0) return;
 
@@ -101,20 +101,21 @@ namespace SL.Util
 
             excel.Application.Workbooks.Add(true);
 
-            foreach (var col in data[0])
+            foreach (var col in data[0].Columns)
             {
                 colIndex++;
-                excel.Cells[1, colIndex] = col.Key;
+                excel.Cells[1, colIndex] = col;
             }
 
             foreach (var row in data)
             {
                 rowIndex++;
                 colIndex = 0;
-                foreach (var col in row)
+                foreach (var col in row.Columns)
                 {
                     colIndex++;
-                    excel.Cells[rowIndex, colIndex] = col.Value.ToString();
+                    excel.Cells[rowIndex, colIndex].NumberFormatLocal = "@";
+                    excel.Cells[rowIndex, colIndex] = row[col] == null ? "" : row[col].ToString();
                 }
             }
             excel.Visible = false;
@@ -127,7 +128,7 @@ namespace SL.Util
 
             excel.ActiveWorkbook.SaveAs(strExcelFileName);
 
-
+            excel.Application.Workbooks.Close();
             excel.Quit();
             excel = null;
 

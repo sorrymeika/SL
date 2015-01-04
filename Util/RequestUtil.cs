@@ -349,6 +349,13 @@ namespace SL.Util
             return "http://" + url.Authority + "/" + src;
         }
 
+        public static string GetCompressedImageSrc(string src)
+        {
+            var url = System.Web.HttpContext.Current.Request.Url;
+
+            return "http://" + url.Authority + "/compress/" + src;
+        }
+
         public static string ReplaceContent(string content)
         {
             var url = System.Web.HttpContext.Current.Request.Url;
