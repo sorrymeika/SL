@@ -99,7 +99,7 @@ namespace SL.Util
             int rowIndex = 1;
             int colIndex = 0;
 
-            excel.Application.Workbooks.Add(true);
+            var book = excel.Application.Workbooks.Add(true);
 
             foreach (var col in data[0].Columns)
             {
@@ -126,11 +126,16 @@ namespace SL.Util
                 File.Delete(strExcelFileName);
             }
 
-            excel.Application.Workbooks.Close();
-            excel.ActiveWorkbook.SaveAs(strExcelFileName);
+            book.Saved = true;
+            book.SaveCopyAs(strExcelFileName);
 
-
+            book.Close(true, Type.Missing, Type.Missing);
             excel.Quit();
+
+            System.Runtime.InteropServices.Marshal.ReleaseComObject(book);
+            System.Runtime.InteropServices.Marshal.ReleaseComObject(excel);
+
+            book = null;
             excel = null;
 
             GC.Collect();//垃圾回收
