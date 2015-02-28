@@ -99,7 +99,7 @@ namespace SL.Util
             int rowIndex = 1;
             int colIndex = 0;
 
-            excel.Application.Workbooks.Add(true);
+            var book = excel.Application.Workbooks.Add(true);
 
             foreach (var col in data[0].Columns)
             {
@@ -126,11 +126,16 @@ namespace SL.Util
                 File.Delete(strExcelFileName);
             }
 
-            excel.Application.Workbooks.Close();
-            excel.ActiveWorkbook.SaveAs(strExcelFileName);
+            book.Saved = true;
+            book.SaveCopyAs(strExcelFileName);
 
-
+            book.Close(true, Type.Missing, Type.Missing);
             excel.Quit();
+
+            System.Runtime.InteropServices.Marshal.ReleaseComObject(book);
+            System.Runtime.InteropServices.Marshal.ReleaseComObject(excel);
+
+            book = null;
             excel = null;
 
             GC.Collect();//垃圾回收
@@ -138,36 +143,48 @@ namespace SL.Util
 
         public static List<Dictionary<string, string>> LoadData(string excelPath, ICollection<String> map)
         {
+            return LoadData(excelPath, new[] { map })[0];
+        }
+
+        public static List<Dictionary<string, string>>[] LoadData(string excelPath, params ICollection<String>[] maps)
+        {
             Excel.Application excel = new Excel.Application();//引用Excel对象
             Excel.Workbook workbook = excel.Workbooks.Add(excelPath);
             excel.UserControl = true;
             System.Text.StringBuilder sb = new System.Text.StringBuilder();
             excel.Visible = false;
 
-            //从1开始.
-            Excel.Worksheet sheet = workbook.Worksheets.get_Item(1) as Excel.Worksheet;
+            List<Dictionary<string, string>>[] results = new List<Dictionary<string, string>>[maps.Length];
 
-            int StartRow = 2;
-            List<Dictionary<string, string>> result = new List<Dictionary<string, string>>();
-            Dictionary<string, string> data;
-            string key;
-
-            for (int row = StartRow; row <= sheet.UsedRange.Rows.Count; row++)
+            for (var i = 0; i < maps.Length; i++)
             {
-                data = new Dictionary<string, string>();
-                for (int col = 1; col <= sheet.UsedRange.Columns.Count; col++)
+                var map = maps[i];
+                //从1开始.
+                Excel.Worksheet sheet = workbook.Worksheets.get_Item(i + 1) as Excel.Worksheet;
+
+                int StartRow = 2;
+                List<Dictionary<string, string>> result = new List<Dictionary<string, string>>();
+                Dictionary<string, string> data;
+                string key;
+
+                for (int row = StartRow; row <= sheet.UsedRange.Rows.Count; row++)
                 {
-                    key = map.ElementAt(col - 1);
-                    Excel.Range range = sheet.Cells[row, col] as Excel.Range;
-                    data[key] = range.Text.Trim();
+                    data = new Dictionary<string, string>();
+                    for (int col = 1; col <= sheet.UsedRange.Columns.Count; col++)
+                    {
+                        key = map.ElementAt(col - 1);
+                        Excel.Range range = sheet.Cells[row, col] as Excel.Range;
+                        data[key] = range.Text.Trim();
+                    }
+                    result.Add(data);
                 }
-                result.Add(data);
+                results[i] = result;
             }
 
             excel.Application.Workbooks.Close();
             excel.Quit();
 
-            return result;
+            return results;
         }
 
         public static string Import(string excelPath, string contentDir, out bool resultFlag)

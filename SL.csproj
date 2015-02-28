@@ -45,6 +45,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Compression\Checksums\Adler32.cs" />
+    <Compile Include="Compression\Checksums\CRC32.cs" />
+    <Compile Include="Compression\Checksums\IChecksum.cs" />
+    <Compile Include="Compression\Checksums\StrangeCRC.cs" />
+    <Compile Include="Compression\SharpZipBaseException.cs" />
     <Compile Include="Data\DynamicRecord.cs" />
     <Compile Include="Data\Database.cs" />
     <Compile Include="Data\SQL.cs" />
@@ -52,6 +57,16 @@
     <Compile Include="Util\CacheUtil.cs" />
     <Compile Include="Util\Config.cs" />
     <Compile Include="Util\ControllerUtil.cs" />
+    <Compile Include="Compression\Core\FileSystemScanner.cs" />
+    <Compile Include="Compression\Core\INameTransform.cs" />
+    <Compile Include="Compression\Core\IScanFilter.cs" />
+    <Compile Include="Compression\Core\NameFilter.cs" />
+    <Compile Include="Compression\Core\PathFilter.cs" />
+    <Compile Include="Compression\Core\StreamUtils.cs" />
+    <Compile Include="Compression\Core\WindowsPathUtils.cs" />
+    <Compile Include="Compression\Encryption\PkzipClassic.cs" />
+    <Compile Include="Compression\Encryption\ZipAESStream.cs" />
+    <Compile Include="Compression\Encryption\ZipAESTransform.cs" />
     <Compile Include="Util\ExcelUtil.cs" />
     <Compile Include="Util\HtmlUtil.cs" />
     <Compile Include="Util\ImageUtil.cs" />
@@ -61,6 +76,32 @@
     <Compile Include="Util\RequestUtil.cs" />
     <Compile Include="Util\SessionUtil.cs" />
     <Compile Include="Util\SettingUtil.cs" />
+    <Compile Include="Compression\Zip\Compression\Deflater.cs" />
+    <Compile Include="Compression\Zip\Compression\DeflaterConstants.cs" />
+    <Compile Include="Compression\Zip\Compression\DeflaterEngine.cs" />
+    <Compile Include="Compression\Zip\Compression\DeflaterHuffman.cs" />
+    <Compile Include="Compression\Zip\Compression\DeflaterPending.cs" />
+    <Compile Include="Compression\Zip\Compression\Inflater.cs" />
+    <Compile Include="Compression\Zip\Compression\InflaterDynHeader.cs" />
+    <Compile Include="Compression\Zip\Compression\InflaterHuffmanTree.cs" />
+    <Compile Include="Compression\Zip\Compression\PendingBuffer.cs" />
+    <Compile Include="Compression\Zip\Compression\Streams\DeflaterOutputStream.cs" />
+    <Compile Include="Compression\Zip\Compression\Streams\InflaterInputStream.cs" />
+    <Compile Include="Compression\Zip\Compression\Streams\OutputWindow.cs" />
+    <Compile Include="Compression\Zip\Compression\Streams\StreamManipulator.cs" />
+    <Compile Include="Compression\Zip\FastZip.cs" />
+    <Compile Include="Compression\Zip\IEntryFactory.cs" />
+    <Compile Include="Compression\Zip\WindowsNameTransform.cs" />
+    <Compile Include="Compression\Zip\ZipConstants.cs" />
+    <Compile Include="Compression\Zip\ZipEntry.cs" />
+    <Compile Include="Compression\Zip\ZipEntryFactory.cs" />
+    <Compile Include="Compression\Zip\ZipException.cs" />
+    <Compile Include="Compression\Zip\ZipExtraData.cs" />
+    <Compile Include="Compression\Zip\ZipFile.cs" />
+    <Compile Include="Compression\Zip\ZipHelperStream.cs" />
+    <Compile Include="Compression\Zip\ZipInputStream.cs" />
+    <Compile Include="Compression\Zip\ZipNameTransform.cs" />
+    <Compile Include="Compression\Zip\ZipOutputStream.cs" />
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="Microsoft.Office.Core">

@@ -291,7 +291,7 @@ namespace SL.Util
             else
             {
                 fileName = file.FileName;
-                ext = fileName.Substring(fileName.LastIndexOf('.'));
+                ext = fileName.LastIndexOf('.') == -1 ? ".jpg" : fileName.Substring(fileName.LastIndexOf('.'));
                 length = file.ContentLength;
             }
         }
