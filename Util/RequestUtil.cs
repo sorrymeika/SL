@@ -159,6 +159,11 @@ namespace SL.Util
             return string.IsNullOrEmpty(value) ? null : System.Web.Security.FormsAuthentication.HashPasswordForStoringInConfigFile(value, "md5");
         }
 
+        public int Int(string name, int defValue, bool emptyAble = true, string emptyText = null, string regex = null, string regexText = null, string compare = null, string compareText = null)
+        {
+            return Int(name, emptyAble, emptyText, regex, regexText, compare, compareText, defValue);
+        }
+
         public int Int(string name, bool emptyAble = true, string emptyText = null, string regex = null, string regexText = null, string compare = null, string compareText = null, int defaultValue = 0)
         {
             string value = getParam(name);
