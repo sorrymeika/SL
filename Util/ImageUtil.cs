@@ -244,11 +244,11 @@ namespace SL.Util
             return randomCode;
         }
 
-        public static byte[] CreateImage(out string checkCode)
+        public static byte[] CreateImage(out string captcha)
         {
-            checkCode = CreateRandomCode(4);
+            captcha = CreateRandomCode(4);
 
-            int iwidth = (int)(checkCode.Length * 12.5);
+            int iwidth = (int)(captcha.Length * 12.5);
             using (Bitmap image = new Bitmap(iwidth, 22))
             {
                 Graphics g = Graphics.FromImage(image);
@@ -267,7 +267,7 @@ namespace SL.Util
                 }
 
                 //输出不同字体和颜色的验证码字符
-                for (int i = 0; i < checkCode.Length; i++)
+                for (int i = 0; i < captcha.Length; i++)
                 {
                     int cindex = rand.Next(7);
                     int findex = rand.Next(5);
@@ -279,7 +279,7 @@ namespace SL.Util
                     {
                         ii = 2;
                     }
-                    g.DrawString(checkCode.Substring(i, 1), f, b, 1 + (i * 12), ii);
+                    g.DrawString(captcha.Substring(i, 1), f, b, 1 + (i * 12), ii);
                 }
                 //画一个边框
                 g.DrawRectangle(new Pen(Color.Black, 0), 0, 0, image.Width - 1, image.Height - 1);
