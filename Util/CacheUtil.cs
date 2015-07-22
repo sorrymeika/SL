@@ -40,13 +40,17 @@ namespace SL.Util
         {
             //建立回调委托的一个实例
             CacheItemRemovedCallback callBack = new CacheItemRemovedCallback(onRemove);
+            if (ExistCache(name))
+            {
+                Remove(name);
+            }
 
             //以Identify为标志，将userInfo存入Cache
             HttpRuntime.Cache.Insert(name, value, null,
-                 System.DateTime.Now.AddHours(hours),//当前指定为24小时,7*24=168
-                 System.Web.Caching.Cache.NoSlidingExpiration,
-                 System.Web.Caching.CacheItemPriority.Default,
-                 callBack);
+             System.DateTime.Now.AddHours(hours),//当前指定为24小时,7*24=168
+             System.Web.Caching.Cache.NoSlidingExpiration,
+             System.Web.Caching.CacheItemPriority.Default,
+             callBack);
         }
 
         public static T Get<T>(string key)
@@ -70,7 +74,7 @@ namespace SL.Util
         {
             try
             {
-                HttpContext.Current.Cache.Remove(key);
+                HttpRuntime.Cache.Remove(key);
             }
             catch// (Exception exp)
             {
