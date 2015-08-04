@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace INAnswer.Service
+namespace SL.Util
 {
     public class Config
     {
-        public static readonly string PrivateKey = "INAnswer018cdkszh23927324dsldfnskftINAnswer";
+        public static readonly string PrivateKey = "==Random018+cdLks*&JHzh!2@3YM92$7324%ds*#ldfnYYskf0t==";
     }
 }

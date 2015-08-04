@@ -20,6 +20,10 @@
             this.Columns = new List<string>(fields.Keys);
         }
 
+        public DynamicRecord() : this(new Dictionary<string, object>())
+        {
+        }
+
         internal DynamicRecord(SerializationInfo info, StreamingContext context)
         {
             this.fields = new Dictionary<string, object>();
