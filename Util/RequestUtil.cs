@@ -383,7 +383,7 @@ namespace SL.Util
             return System.Text.RegularExpressions.Regex.Replace(content, @"src=""/", "src=\"http://" + url.Authority + "/", System.Text.RegularExpressions.RegexOptions.IgnoreCase);
         }
 
-        public string Save()
+        public string Save(int maxWidth = 0, int maxHeight = 0)
         {
             if (!isEmpty)
             {
@@ -397,7 +397,24 @@ namespace SL.Util
                     Directory.CreateDirectory(dir);
                 }
 
-                _file.SaveAs(savePath);
+                if (maxWidth != 0)
+                {
+                    if (maxHeight == 0)
+                    {
+                        maxHeight = 2000;
+                    }
+
+                    var buffer = ImageUtil.Compress(_file.InputStream, 6, maxWidth, maxHeight);
+
+                    using (var fs = System.IO.File.Open(savePath, FileMode.Create))
+                    {
+                        fs.Write(buffer, 0, buffer.Length);
+                    }
+                }
+                else
+                {
+                    _file.SaveAs(savePath);
+                }
                 return src;
             }
             return null;
