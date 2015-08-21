@@ -1,0 +1,23 @@
+﻿{
+    root: "/teacher",
+    debug: true,
+    js: {},
+    css: {
+        'images/style.css': [],
+        './images/teacher.css': ["./images/views.css"]
+    },
+    route: {
+        "/": { controller: "home", template: "home" },
+        "/locate": { controller: "locate", template: "locate" },
+        "/wallet": { controller: "wallet", template: "wallet"},
+        "/selectbank": { controller: "selectbank", template: "selectbank"},
+        "/withdraw": { controller: "withdraw", template: "withdraw"},
+        "/linkbank/{bankName:.+}/{cardNo:\\d+}": { controller: "linkbankno", template: "linkbankno"},
+        "/linkbank/{bankName:.+}": { controller: "linkbank", template: "linkbank"},
+        "/message": { controller: "message", template: "message"},
+        "/login": { controller: "login", template: "login" },
+        "/member": { controller: "member", template: "member" },
+        "/settings": { controller: "settings", template: "settings" },
+        "/menu": { controller: "menu", template: "menu" }
+    }
+}
