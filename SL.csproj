@@ -74,6 +74,7 @@
     <Compile Include="Util\RandomUtil.cs" />
     <Compile Include="Util\Rar.cs" />
     <Compile Include="Util\RequestUtil.cs" />
+    <Compile Include="Util\DateUtil.cs" />
     <Compile Include="Util\SessionUtil.cs" />
     <Compile Include="Util\SettingUtil.cs" />
     <Compile Include="Compression\Zip\Compression\Deflater.cs" />
