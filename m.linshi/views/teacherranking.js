@@ -16,16 +16,23 @@ define(function(require, exports, module) {
                 }
             },
             'tap [sn-repeat-name^="data"][data-id]': function(e) {
-                if(e.currentTarget.getAttribute('data-id')) {
+                if (e.currentTarget.getAttribute('data-id')) {
                     //跳转到详情页，同时传递当前页面route
-                    this.forward('/teacher/' + e.currentTarget.getAttribute('data-id')+'?from='+this.route.url);
+                    this.forward('/teacher/' + e.currentTarget.getAttribute('data-id') + '?from=' + this.route.url);
                 }
             },
             'tap .js_home': function(e) {
-                this.back('/');
+                if (sl.isInApp) {
+                    //当m站在app客户端里，使用alert方式调用app本地接口
+                    alert("linshi://" + JSON.stringify({
+                        method: 'back'
+                    }));
+                } else {
+                    this.back('/');
+                }
             },
             'tap .more-teachers': function(e) {
-                this.forward('/index?from='+this.route.url);
+                this.forward('/index?from=' + this.route.url);
             }
         },
 

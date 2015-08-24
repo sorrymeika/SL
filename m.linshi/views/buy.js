@@ -69,17 +69,13 @@ define(function (require, exports, module) {
 
             self.onResult('couponSelect', function (e, coupon) {
 
-                if (coupon.coupon_id == 11) {
-                    var data = self.model.data;
-                    var amount = data.basic_info.price * data.total_time;
-                    coupon.price = Math.min(200, Math.round(amount * .9));
-                }
-
                 this.model.set({
                     coupon_id: coupon.coupon_id,
                     coupon_price: coupon.price,
                     coupon_title: coupon.coupon_title
                 });
+
+                this.model.trigger('change:total_time');
             });
 
             if (!teacher.course_list) {
@@ -139,6 +135,7 @@ define(function (require, exports, module) {
                 },
                 complete: function (res, index) {
                     self.model.set('course', res[0]).set('course_index', selector.eq(0).index());
+                    self.model.trigger('change:total_time');
                 }
             });
 
@@ -150,15 +147,16 @@ define(function (require, exports, module) {
             this.model.on('change:total_time', function () {
                 var data = self.model.data;
 
-                var amount = data.basic_info.price * data.total_time;
+                self.model.set({
+                    discount: 0,
+                    discountInfo: '折扣',
+                    nextDiscount: self.discount[0].class_hours_number + '课时（' + self.discount[0].discount + '折）'
+                });
+
+                var amount = parseFloat(data.course.price) * data.total_time;
                 if (data.coupon_id == 11) {
                     self.model.set("coupon_price", Math.min(200, Math.round(amount * .9)));
                 } else if (self.discount && self.discount.length) {
-                    self.model.set({
-                        discount: 0,
-                        discountInfo: '折扣',
-                        nextDiscount: self.discount[0].class_hours_number + '课时（' + self.discount[0].discount + '折）'
-                    });
 
                     for (var i = 0; i < self.discount.length; i++) {
                         var discount = self.discount[i];
@@ -185,8 +183,6 @@ define(function (require, exports, module) {
                 } else {
                     self.discount = res.data;
                     self.model.trigger('change:total_time');
-
-                    console.log(self.discount);
                 }
             }, 'json');
 

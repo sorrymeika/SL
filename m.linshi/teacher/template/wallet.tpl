@@ -7,14 +7,14 @@
 <div class="main ">
 	<div class="wallet-info">
 		<p>当前金额</p>
-		<strong><span class="money">5200</span>元</strong>
+		<strong><span class="money" sn-binding="html:income"></span>元</strong>
 		<div class="btn-group">
 			<div class="btn-extract">
-				<strong class="money">5200</strong>
+				<strong class="money" sn-binding="html:balance"></strong>
 				<p>可提现金额</p>
 			</div>
 			<div class="btn-income">
-				<strong class="money">8800</strong>
+				<strong class="money" sn-binding="html:fee">8800</strong>
 				<p>累计收入</p>
 			</div>
 		</div>

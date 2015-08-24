@@ -61,17 +61,17 @@
 
 .head_message {
     width: 30px;
-    height: 50px;
+    height: 30px;
     position: absolute;
-    background: url(icons.png) no-repeat -30px -12px;
+    background: url(icons.png) no-repeat -30px -20px;
     background-size: 100px auto;
     right: 15px;
-    top: 5px;
+    top: 10px;
 }
 
 .head_message i {
     position: relative;
-    top: -13px;
+    top: -22px;
     right: -14px;
     font-size: 0.7em;
     color: #f80e0e;
@@ -224,7 +224,7 @@
 }
 
 .wallet-info .money:before {
-    background: url(icons.png) no-repeat -44px -46px;
+    background: url(icons.png) no-repeat -47px -44px;
     background-size: 80px auto;
     display: inline-block;
     height: 20px;
@@ -233,7 +233,7 @@
 }
 
 .wallet-info .btn-group .money:before {
-    background: url(icons.png) no-repeat -22px -46px;
+    background: url(icons.png) no-repeat -24px -44px;
     background-size: 80px auto;
 }
 
@@ -397,10 +397,12 @@
     padding: 10px 0;
 }
 
-.menu-teacher .menu-avatars {
+.menu-teacher .menu-head {
     height: 60px;
     width: 60px;
     border-radius: 30px;
+    background: url(head_default.png) no-repeat 0 0;
+    background-size: 59px;
 }
 
 .menu-teacher .menu-name,
@@ -510,6 +512,7 @@
 }
 
 .next-step,
+.submit-btn,
 .bind-btn,
 .confirm-btn {
     padding: 15px 0;
@@ -593,6 +596,8 @@
     color: #fff;
     padding: 8px;
     border-radius: 5px;
+    position: absolute;
+    right: 10px;
 }
 
 .bind-card-alert {
@@ -638,8 +643,7 @@
     width: 160px;
 }
 
-.withdraw {
-}
+.withdraw {}
 
 .withdraw > p {
     padding: 10px 0;
@@ -682,7 +686,119 @@
     text-align: center;
     font-size: 0.6em;
 }
+
 .withdraw .select-bank-link {
     top: 10px;
     right: 0;
+}
+
+.feedback .feedback-list {
+    margin-top: 10px;
+}
+
+.feedback-list .feedback-item {
+    background-color: #fff;
+    border-top: 1px solid #d2d2d2;
+    border-bottom: 1px solid #d2d2d2;
+}
+
+.feedback-item h3 {
+    margin-left: 10px;
+    border-bottom: 1px solid #d2d2d2;
+    padding: 6px 0;
+}
+
+.feedback-list .head-pic {
+    width: 15%;
+    border-radius: 35px;
+}
+
+.feedback-list .info {
+    position: relative;
+    padding: 10px;
+    min-height: 120px;
+}
+
+.feedback-list .info > * {
+    display: inline-block;
+}
+
+.feedback-list .info-panel {
+    font-size: 0.8em;
+    position: absolute;
+    width: 85%;
+    padding: 10px;
+}
+
+.feedback-list .info-panel {
+    color: #777777;
+}
+
+.feedback-item .class-basic > * {
+    display: inline-block;
+}
+
+.info-panel .class-name {
+    font-weight: bold;
+    color: #271f13;
+}
+
+.info-panel .class-scope {
+    position: absolute;
+    right: 15px;
+}
+
+.info-panel .class-time {
+    margin-top: 10px;
+}
+
+.info-panel .btn-group {
+    margin-top: 15px;
+    border-top: 1px solid #d2d2d2;
+}
+
+.info-panel .btn-group > a {
+    padding: 6px 25px;
+    position: absolute;
+    border-radius: 3px;
+    margin-top: 10px;
+}
+
+.info-panel .btn-group .send-note {
+    background-color: #f90;
+    color: #fff;
+}
+
+.info-panel .btn-group .homework {
+    background-color: #fff;
+    color: #f90;
+    right: 20px;
+    border: 1px solid #d2d2d2;
+}
+
+.info-panel .btn-group .handled {
+    background-color: #fff;
+    color: #6b6b6b;
+    border: 1px solid #d2d2d2;
+}
+
+.feedback-item .resp-group {
+    text-align: center;
+    padding: 10px 20px;
+}
+
+.feedback-item .resp-group > * {
+    display: block;
+    border: 1px solid #d2d2d2;
+    border-radius: 3px;
+}
+
+.feedback-item .resp-group textarea {
+    width: 100%;
+}
+
+.feedback-item .resp-group .submit-btn {
+    padding: 5px 20px;
+    width: 100px;
+    margin: 15px auto;
 }

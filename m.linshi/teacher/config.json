@@ -10,6 +10,7 @@
         "/": { controller: "home", template: "home" },
         "/locate": { controller: "locate", template: "locate" },
         "/wallet": { controller: "wallet", template: "wallet"},
+        "/feedback": { controller: "feedback", template: "feedback"},
         "/selectbank": { controller: "selectbank", template: "selectbank"},
         "/withdraw": { controller: "withdraw", template: "withdraw"},
         "/linkbank/{bankName:.+}/{cardNo:\\d+}": { controller: "linkbankno", template: "linkbankno"},

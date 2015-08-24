@@ -57,7 +57,7 @@
                 selected: '',
                 course_category: '',
                 selectCourseCategory: function (e, item) {
-                    this.set('course_category', item.data.id);
+                    this.set('course_category', item.data.id||'');
 
                     if (item.data.name == '全部') {
                         this.set('selected', '');
@@ -72,7 +72,8 @@
                     this.set('selected', '');
 
                     self.loading.setParam({
-                        discipline: item.data.name == '全部' ? '' : item.data.name
+                        discipline: item.data.name == '全部' ? '' : item.data.name,
+                        course_category: this.data.course_category
 
                     }).reload();
                 },
@@ -155,7 +156,7 @@
                 area: area,
                 current_type: 0,
                 selectType: function (e, item) {
-                    this.set('current_type', item.data.name);
+                    this.set('current_type', item.data.id);
                     this.set('selected', '');
 
                     self.loading.setParam({

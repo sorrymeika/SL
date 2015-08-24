@@ -28,40 +28,13 @@ define(function(require, exports, module) {
                 this.member = member = JSON.parse(member);
 
                 this.model.set({
-                    user_name: member.nick_name,
-                    memberUrl: '/member',
-                });
-
-                if (!('head_photo' in member)) {
-                    this.loading = new Loading({
-                        url: '/user/get_member_info',
-                        check: false,
-                        checkData: false,
-                        params: {
-                            member_id: member.member_id
-                        },
-                        $el: this.$el,
-                        success: function(res) {
-                            member = $.extend(member, res.data);
-                            localStorage.setItem('member', JSON.stringify(member));
-                            self.model.set({
-                                avatars: member.head_photo + '?v=' + localStorage.getItem('photo_ver'),
-                                user_name: member.nick_name
-                            });
-                        }
-                    });
-                    this.loading.load();
-                } else if (member.head_photo)
-                    this.model.set({
-                        avatars: member.head_photo
-                    });
-            } else {
-                this.model.set({
-                    avatars: 'images/head_default.png'
+                    user_name: member.name,
+                    user_phone: member.mobile,
+                    head_photo: member.head_photo,
+                    memberUrl: '/member'
                 });
             }
-        },
-
+        },        
         onShow: function() {
             var self = this;
             if (self.member) {

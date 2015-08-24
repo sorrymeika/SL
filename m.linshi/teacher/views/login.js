@@ -105,23 +105,15 @@ define(function(require, exports, module) {
                             mobile: self.model.data.mobile,
                             member_id: res.data.member,
                             teacher_id: res.data.teacher,
+                            name: res.data.name,
+                            head_photo: res.data.headphoto,
                             isNew: res.data.isNew
                         };
 
                         localStorage.setItem('member', JSON.stringify(member));
 
-                        self.loading.showLoading();
+                        self.back(self.route.queries.success || '/');
 
-                        $.post(bridge.url('/m/base'), {
-                            member: res.data.member,
-                            teacher: res.data.teacher
-                        }, function(res) {
-                            util.store('member', $.extend(member, res.data));
-                            self.loading.hideLoading();
-
-                            self.back(self.route.queries.success || '/');
-
-                        }, 'json');
                     }
                 },
                 error: function(res) {
@@ -130,7 +122,7 @@ define(function(require, exports, module) {
             });
 
             this.valid = new Loading({
-                url: '/m/code',
+                url: '/t/code',
                 method: 'POST',
                 xhrFields: {
                     withCredentials: true

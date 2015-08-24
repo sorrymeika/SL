@@ -1,4 +1,4 @@
-define(function (require, exports, module) {
+define(function(require, exports, module) {
 
     var $ = require('$');
     var util = require('util');
@@ -11,7 +11,7 @@ define(function (require, exports, module) {
 
     return Activity.extend({
         events: {
-            'tap': function (e) {
+            'tap': function(e) {
                 if (e.target == this.el) {
                     this.back('/teacher');
                 }
@@ -19,12 +19,12 @@ define(function (require, exports, module) {
         },
         swipeRightForwardAction: '/teacher/menu',
 
-        onCreate: function () {
+        onCreate: function() {
             var self = this;
 
             var $main = this.$('.main');
 
-           Scroll.bind($main);
+            Scroll.bind($main);
 
             this.model = new model.ViewModel(this.$el, {
                 back: '/teacher',
@@ -34,30 +34,62 @@ define(function (require, exports, module) {
             self.$slider = self.$('.js_slider');
 
             this.loading = new Loading({
-                url: '/ad/ad_list',
+                url: '/m/finance',
+                check: false,
+                checkData: false,
+                $el: self.$slider,
+                success: function(res) {
+                    self.model.set(res.data);
+
+                    self.statementsRequest.setParam({
+                        member: member.member_id,
+                        teacher: member.teacher_id,
+                        page: 1,
+                        per_page: 10
+                    }).load();
+                }
+            });
+
+            this.statementsRequest = new Loading({
+                url: '/m/log',
                 params: {
-                    postion_id: 1
+                    page: 1,
+                    per_page: 10
                 },
                 check: false,
                 checkData: false,
                 $el: self.$slider,
-                success: function (res) {
-                    self.slider = new Slider(self.$slider, {
-                       // autoLoop: 4000,
-                        itemTemplate: '<a href="<%=url%>"><img src="<%=pic%>"></a>',
-                        data: res.data,
-                        loop: true
-                    });
+                $scroll: $main,
+                success: function(res) {
+                    if (!res.data) {
+                        this.dataNotFound();
+                    }
+                    self.model.set(res);
+                },
+                append: function(res) {
+
+                    self.model.get('data').append(res.data);
                 }
             });
-            this.loading.load();
+
+            var member = localStorage.getItem('member');
+            if (member) {
+                this.member = member = JSON.parse(member);
+
+                this.loading.setParam({
+                    member: member.member_id,
+                    teacher: member.teacher_id
+                }).load();
+
+
+            }
+
         },
 
-        onShow: function () {
+        onShow: function() {
             var that = this;
         },
 
-        onDestory: function () {
-        }
+        onDestory: function() {}
     });
 });

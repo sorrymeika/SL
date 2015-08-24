@@ -22,13 +22,6 @@ define(function (require, exports, module) {
             },
             'tap .bind-btn': function(e) {
 
-                //this.bindBankRequest.setParam(this.model);
-                this.forward('/teacher/withdraw');
-            },
-            'tap .req-sms': function(e) {
-
-                var self = this, sec = 60, $smsAlert = $(e.target);
-
                 var _mobile = this.model.get('mobile');
                 if (!_mobile || !util.validateMobile(_mobile)) {
                     sl.tip('请输入正确的手机');
@@ -45,12 +38,40 @@ define(function (require, exports, module) {
                     return;
                 }
 
-                if(!this.model.get('name')) {
-                    sl.tip('请输入您的姓名');
+                if(!this.model.get('city')) {
+                    sl.tip('请选择您的开户行所在城市');
                     return;
                 }
 
+                if(!this.model.get('code')) {
+                    sl.tip('请输入正确的验证码');
+                    return;
+                }
 
+                if(!this.bankName) {
+                    return;
+                }
+                var _member = localStorage.getItem('member');
+                var member = JSON.parse(_member);
+                this.bindBankRequest.setParam({
+                    member: member.member_id,
+                    teacher: member.teacher_id,
+                    name: this.model.get('name'),
+                    bank: this.bankName,
+                    card: this.model.get('card'),
+                    city: this.model.get('city')
+                });
+                // this.forward('/teacher/withdraw');
+            },
+            'tap .req-sms': function(e) {
+
+                var self = this, sec = 60, $smsAlert = $(e.target);
+
+                var _mobile = this.model.get('mobile');
+                if (!_mobile || !util.validateMobile(_mobile)) {
+                    sl.tip('请输入正确的手机');
+                    return;
+                }
 
                 $smsAlert.addClass('disabled');
                 this.smsRequest.setParam({
@@ -104,7 +125,7 @@ define(function (require, exports, module) {
 
            Scroll.bind($main);
 
-           var bankName = this.route.data.bankName;
+           var bankName = this.bankName = this.route.data.bankName;
            var cardNo = this.route.data.cardNo;
 
            var bankClassMap = {
@@ -157,7 +178,7 @@ define(function (require, exports, module) {
             }]);
 
             this.smsRequest = new Loading({
-                url: '/m/code',
+                url: '/t/code',
                 method: 'POST',
                 xhrFields: {
                     withCredentials: true
@@ -168,8 +189,6 @@ define(function (require, exports, module) {
                 success: function(res) {
                     if (res.code !== 40000) {
                         sl.tip(res.msg);
-                    } else {
-                        
                     }
                 }
             });
