@@ -1,3 +1,7 @@
+.view.active .main {
+    font-size: 14px;
+}
+
 .teacher_locate {
     margin-bottom: 10px;
 }
@@ -282,6 +286,16 @@
     border-bottom: 1px solid #d2d2d2;
 }
 
+.message-list .item-pic {
+    width: 20%;
+    text-align: center;
+}
+
+.message-list .item-pic img {
+    width: 50px;
+    background: none;
+}
+
 .message-list .pic {
     width: 20%;
     background: url(icon_show.png) no-repeat 10px 0;
@@ -320,11 +334,14 @@
 }
 
 .message-list .title {
-    width: 70%;
+    width: 50%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .message-list .date {
-    width: 30%;
+    width: 50%;
     margin-left: -5px;
     text-align: right;
 }
@@ -514,6 +531,7 @@
 .next-step,
 .submit-btn,
 .bind-btn,
+.unbind-btn,
 .confirm-btn {
     padding: 15px 0;
     background-color: #fff;
@@ -578,6 +596,10 @@
 .bind-card-info .input-group .input-item:last-child {
     border-radius: 0 0 5px 5px;
     border-bottom: 1px solid #d2d2d2;
+}
+
+.bind-bank .bind-card-info .input-group .input-item-name {
+    border-radius: 5px;
 }
 
 .bind-card-info .input-item strong {
@@ -677,6 +699,10 @@
     font-size: 1.2em;
 }
 
+.withdraw .bank-info label:first-child input {
+    text-align: center;
+}
+
 .withdraw label:last-child input {
     font-size: 1.5em;
     margin-left: 20%;
@@ -685,6 +711,7 @@
 .withdraw .withdraw-note {
     text-align: center;
     font-size: 0.6em;
+    color: #746f68;
 }
 
 .withdraw .select-bank-link {
@@ -801,4 +828,37 @@
     padding: 5px 20px;
     width: 100px;
     margin: 15px auto;
+}
+
+.unbind-bank {
+    padding: 10px 30px;
+}
+
+.unbind-bank small {
+    padding: 0;
+    color: #979694;
+    display: block;
+    font-size: 0.8em;
+    margin-left: 28px;
+}
+
+.unbind-bank .card-no {
+    font-weight: normal;
+    font-size: 0.8em;
+}
+
+.unbind-bank .bind-card-alert {
+    color: #000;
+}
+
+.unbind-bank > [class$=-bank] {
+    margin-left: 0;
+}
+
+.unbind-bank .bind-card-info {
+    padding: 0;
+}
+
+.unbind-bank .bind-card-info .unbind-btn {
+    width: 100%;
 }

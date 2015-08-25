@@ -33,11 +33,6 @@ define(function (require, exports, module) {
                     return;
                 }
 
-                if(!this.model.get('card')) {
-                    sl.tip('请输入您的身份证');
-                    return;
-                }
-
                 if(!this.model.get('city')) {
                     sl.tip('请选择您的开户行所在城市');
                     return;
@@ -48,20 +43,22 @@ define(function (require, exports, module) {
                     return;
                 }
 
-                if(!this.bankName) {
-                    return;
-                }
+                // if(!this.bankName) {
+                //     return;
+                // }
                 var _member = localStorage.getItem('member');
                 var member = JSON.parse(_member);
-                this.bindBankRequest.setParam({
+                var basicBankInfo = this.basicBankInfo = {
                     member: member.member_id,
                     teacher: member.teacher_id,
                     name: this.model.get('name'),
-                    bank: this.bankName,
-                    card: this.model.get('card'),
-                    city: this.model.get('city')
-                });
-                // this.forward('/teacher/withdraw');
+                    bank: this.route.data.bankName,
+                    card: this.route.data.cardNo,
+                    city: this.model.get('city'),
+                    code: this.model.get('code')
+                };
+                this.bindBankRequest.setParam(basicBankInfo).load();
+                
             },
             'tap .req-sms': function(e) {
 
@@ -125,7 +122,7 @@ define(function (require, exports, module) {
 
            Scroll.bind($main);
 
-           var bankName = this.bankName = this.route.data.bankName;
+           var bankName = this.route.data.bankName;
            var cardNo = this.route.data.cardNo;
 
            var bankClassMap = {
@@ -206,9 +203,8 @@ define(function (require, exports, module) {
                     if (res.code !== 40000) {
                         sl.tip(res.msg);
                     } else {
-                        localStorage.setItem('valid_time', Date.now() + 60000);
-
-                        self.validTimeout();
+                        localStorage.setItem('bankInfo', JSON.stringify(self.basicBankInfo));
+                        self.forward('/teacher/withdraw/' + self.route.data.cardNo);
                     }
                 }
             });

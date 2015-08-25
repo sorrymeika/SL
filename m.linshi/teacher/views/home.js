@@ -18,6 +18,27 @@ define(function(require, exports, module) {
             },
             'tap .head_menu': function(e) {
                 this.forward('/teacher/menu');
+            },
+            'tap .wallet': function(e) {
+                if (this.member) {
+                    this.forward('/teacher/wallet');
+                } else {
+                    sl.tip('您还未登录!');
+                }
+            },
+            'tap .feedback': function(e) {
+                if (this.member) {
+                    this.forward('/teacher/feedback');
+                } else {
+                    sl.tip('您还未登录!');
+                }
+            },
+            'tap .head_message': function(e) {
+                if (this.member) {
+                    this.forward('/teacher/message');
+                } else {
+                    sl.tip('您还未登录!');
+                }
             }
         },
 
@@ -28,10 +49,11 @@ define(function(require, exports, module) {
 
             var $main = this.$('.main');
 
-            Scroll.bind($main);
+            // Scroll.bind($main);
 
-              model.Filter.formatPercent = function(value) {
-                var tmp = value * 100, v = xround(tmp, 2);
+            model.Filter.formatPercent = function(value) {
+                var tmp = value * 100,
+                    v = xround(tmp, 2);
                 return value > 0 && value < 1 && typeof value === 'number' ? (v + '%') : '0%';
             };
 

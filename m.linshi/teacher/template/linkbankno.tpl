@@ -15,12 +15,12 @@
 		<h3>请填写银行预留信息</h3>
 		
 		<div class="input-group">
-			<div class="input-item">
+			<div class="input-item input-item-name">
 				<strong>姓名</strong><input placeholder="您的姓名" type="text" sn-model="name">
 			</div>
-			<div class="input-item">
+			<!-- <div class="input-item">
 				<strong>身份证</strong><input placeholder="您的身份证" maxlength="25" type="text" sn-model="card">
-			</div>
+			</div> -->
 			
 		</div>
 		<div class="bind-card-alert">后续只能提现到该持卡人的银行卡</div>

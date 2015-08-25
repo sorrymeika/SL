@@ -1,4 +1,4 @@
-define(function(require, exports, module) {
+define(function (require, exports, module) {
 
     var $ = require('$');
     var util = require('util');
@@ -10,16 +10,10 @@ define(function(require, exports, module) {
     var animation = require('animation');
 
     return Activity.extend({
-        events: {
-            'tap': function(e) {
-                if (e.target == this.el) {
-                    this.back('/teacher');
-                }
-            }
-        },
-        swipeRightForwardAction: '/teacher/menu',
+        events: {},
+        swipeRightBackAction: '/teacher',
 
-        onCreate: function() {
+        onCreate: function () {
             var self = this;
 
             var $main = this.$('.main');
@@ -28,10 +22,8 @@ define(function(require, exports, module) {
 
             this.model = new model.ViewModel(this.$el, {
                 back: '/teacher',
-                title: '教学反馈'
+                title: '我的名片'
             });
-
-            self.$slider = self.$('.js_slider');
 
             var member = localStorage.getItem('member');
             if (member) {
@@ -47,7 +39,7 @@ define(function(require, exports, module) {
                     checkData: false,
                     $content: $main.children(":first-child"),
                     $el: self.$slider,
-                    success: function(res) {
+                    success: function (res) {
                         if (!res.data || !res.data.info || !res.data.info.length) {
                             this.dataNotFound();
 
@@ -56,7 +48,7 @@ define(function(require, exports, module) {
 
                         self.model.set(res);
                     },
-                    append: function(res) {
+                    append: function (res) {
                         if (res.data.info.length >= 10) {
                             res.total = (this.page + 1) * this.per_page;
                         }
@@ -68,10 +60,10 @@ define(function(require, exports, module) {
 
         },
 
-        onShow: function() {
+        onShow: function () {
             var that = this;
         },
 
-        onDestory: function() {}
+        onDestory: function () { }
     });
 });

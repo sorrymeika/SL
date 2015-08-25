@@ -1,4 +1,4 @@
-define(function (require, exports, module) {
+define(function(require, exports, module) {
 
     var $ = require('$');
     var util = require('util');
@@ -11,53 +11,69 @@ define(function (require, exports, module) {
 
     return Activity.extend({
         events: {
-            'tap': function (e) {
+            'tap': function(e) {
                 if (e.target == this.el) {
                     this.back('/teacher/selectbank');
+                }
+            },
+            'tap .confirm-btn': function(e) {
+
+                var money = this.model.get('money');
+                if (!money) {
+                    sl.tip('请输入提现金额');
+                    return;
+                }
+
+                var member = localStorage.getItem('member');
+                if (member) {
+                    this.member = member = JSON.parse(member);
+
+                    this.withdrawRequest.setParam({
+                        member: member.member_id,
+                        teacher: member.teacher_id,
+                        money: money
+                    }).load();
                 }
             }
         },
         swipeRightForwardAction: '/teacher/menu',
 
-        onCreate: function () {
+        onCreate: function() {
             var self = this;
 
             var $main = this.$('.main');
 
-           Scroll.bind($main);
+            Scroll.bind($main);
 
             this.model = new model.ViewModel(this.$el, {
                 back: '/teacher/selectbank',
-                title: '提现'
+                title: '提现',
+                cardNo: self.route.data.cardNo
             });
 
             self.$slider = self.$('.js_slider');
 
-            this.loading = new Loading({
-                url: '/ad/ad_list',
-                params: {
-                    postion_id: 1
-                },
+            this.withdrawRequest = new Loading({
+                url: '/m/dowithdraw',
                 check: false,
                 checkData: false,
                 $el: self.$slider,
-                success: function (res) {
-                    self.slider = new Slider(self.$slider, {
-                       // autoLoop: 4000,
-                        itemTemplate: '<a href="<%=url%>"><img src="<%=pic%>"></a>',
-                        data: res.data,
-                        loop: true
-                    });
+                success: function(res) {
+                    if (res.code !== 40000) {
+                        sl.tip(res.msg);
+                        return;
+                    } else {
+                        sl.tip(res.msg);
+                        self.forward('/teacher/wallet');
+                    }
                 }
             });
-            this.loading.load();
         },
 
-        onShow: function () {
+        onShow: function() {
             var that = this;
         },
 
-        onDestory: function () {
-        }
+        onDestory: function() {}
     });
 });

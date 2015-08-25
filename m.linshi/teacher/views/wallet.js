@@ -39,6 +39,10 @@ define(function(require, exports, module) {
                 checkData: false,
                 $el: self.$slider,
                 success: function(res) {
+                    if (res.code !== 40000) {
+                        sl.tip(res.msg);
+                        return;
+                    }
                     self.model.set(res.data);
 
                     self.statementsRequest.setParam({
@@ -61,13 +65,17 @@ define(function(require, exports, module) {
                 $el: self.$slider,
                 $scroll: $main,
                 success: function(res) {
+                    if (res.code !== 40000) {
+                        sl.tip(res.msg);
+                        return;
+                    }
                     if (!res.data) {
                         this.dataNotFound();
                     }
                     self.model.set(res);
                 },
                 append: function(res) {
-
+                    //
                     self.model.get('data').append(res.data);
                 }
             });
@@ -80,10 +88,7 @@ define(function(require, exports, module) {
                     member: member.member_id,
                     teacher: member.teacher_id
                 }).load();
-
-
             }
-
         },
 
         onShow: function() {
