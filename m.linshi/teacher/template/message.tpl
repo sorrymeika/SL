@@ -7,7 +7,9 @@
 
 <div class="message-list" sn-repeat="item in data" sn-binding="data-id:item.id">
 	<div class="item-pic">
-		<img sn-binding="src:item.imgUrl" alt="">
+		<img sn-binding="src:item.imgUrl" alt="邻师网">
+
+		<i sn-binding="class:item.status|checkReadStatus"></i>
 	</div>
 	<!-- <img sn-binding="src:data.Pic1|or:data.Pic" /> -->
 	<div class="info">

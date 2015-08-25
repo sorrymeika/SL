@@ -8,6 +8,7 @@ define(function(require, exports, module) {
     var model = require('core/model');
     var Scroll = require('widget/scroll');
     var animation = require('animation');
+    var Utility = require('../common/utils');
 
     return Activity.extend({
         events: {
@@ -80,9 +81,9 @@ define(function(require, exports, module) {
                 }
             });
 
-            var member = localStorage.getItem('member');
+            var member = Utility.getCurrentMember();
             if (member) {
-                this.member = member = JSON.parse(member);
+                this.member = member;
 
                 this.loading.setParam({
                     member: member.member_id,

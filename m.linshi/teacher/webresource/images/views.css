@@ -1,4 +1,4 @@
-.view.active .main {
+.view .main {
     font-size: 14px;
 }
 
@@ -354,6 +354,15 @@
 .message-list .date {
     color: #6c6c6c;
     font-size: 0.8em;
+}
+
+.message-list .item-pic .icon-unread {
+    background: url(icons.png) no-repeat -32px -13px;
+    background-size: 46px auto;
+    position: absolute;
+    height: 10px;
+    width: 10px;
+    left: 47px;
 }
 
 .menu .menu-teacher {
@@ -737,6 +746,7 @@
 
 .feedback-list .head-pic {
     width: 15%;
+    height: 50px;
     border-radius: 35px;
 }
 
@@ -812,6 +822,7 @@
 .feedback-item .resp-group {
     text-align: center;
     padding: 10px 20px;
+    display: none;
 }
 
 .feedback-item .resp-group > * {

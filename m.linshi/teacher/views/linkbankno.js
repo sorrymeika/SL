@@ -9,6 +9,7 @@ define(function (require, exports, module) {
     var Scroll = require('widget/scroll');
     var Selector = require('widget/selector');
     var animation = require('animation');
+    var Utility = require('../common/utils');
 
     return Activity.extend({
         events: {
@@ -46,8 +47,7 @@ define(function (require, exports, module) {
                 // if(!this.bankName) {
                 //     return;
                 // }
-                var _member = localStorage.getItem('member');
-                var member = JSON.parse(_member);
+                var member = Utility.getCurrentMember();
                 var basicBankInfo = this.basicBankInfo = {
                     member: member.member_id,
                     teacher: member.teacher_id,

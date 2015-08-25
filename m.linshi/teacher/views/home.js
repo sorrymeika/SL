@@ -8,6 +8,7 @@ define(function(require, exports, module) {
     var model = require('core/model');
     var Scroll = require('widget/scroll');
     var animation = require('animation');
+    var Utility = require('../common/utils');
 
     return Activity.extend({
         events: {
@@ -19,14 +20,14 @@ define(function(require, exports, module) {
             'tap .head_menu': function(e) {
                 this.forward('/teacher/menu');
             },
-            'tap .wallet': function(e) {
+            'tap .wallet-pic': function(e) {
                 if (this.member) {
                     this.forward('/teacher/wallet');
                 } else {
                     sl.tip('您还未登录!');
                 }
             },
-            'tap .feedback': function(e) {
+            'tap .feedback-pic': function(e) {
                 if (this.member) {
                     this.forward('/teacher/feedback');
                 } else {
@@ -49,7 +50,7 @@ define(function(require, exports, module) {
 
             var $main = this.$('.main');
 
-            // Scroll.bind($main);
+            Scroll.bind($main);
 
             model.Filter.formatPercent = function(value) {
                 var tmp = value * 100,
@@ -90,9 +91,9 @@ define(function(require, exports, module) {
                 }
             });
 
-            var member = localStorage.getItem('member');
+            var member = Utility.getCurrentMember();
             if (member) {
-                this.member = member = JSON.parse(member);
+                this.member = member;
 
                 this.loading.setParam({
                     member: member.member_id,

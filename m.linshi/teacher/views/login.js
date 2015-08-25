@@ -8,6 +8,7 @@ define(function(require, exports, module) {
     var Scroll = require('../../widget/scroll');
     var animation = require('animation');
     var bridge = require('bridge');
+    var Utility = require('../common/utils');
 
     return Activity.extend({
         events: {
@@ -110,7 +111,7 @@ define(function(require, exports, module) {
                             isNew: res.data.isNew
                         };
 
-                        localStorage.setItem('member', JSON.stringify(member));
+                        Utility.setCurrentMember('currentMember', JSON.stringify(member));
 
                         self.back(self.route.queries.success || '/');
 

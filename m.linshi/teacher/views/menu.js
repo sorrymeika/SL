@@ -5,6 +5,7 @@ define(function(require, exports, module) {
         Activity = require('activity'),
         model = require('core/model');
     var Loading = require('../../widget/extend/loading');
+    var Utility = require('../common/utils');
 
     return Activity.extend({
         toggleAnim: 'menu',
@@ -23,7 +24,7 @@ define(function(require, exports, module) {
                 user_name: '请登录'
             });
 
-            var member = localStorage.getItem('member');
+            var member = Utility.getCurrentMember();
             if (member) {
                 this.member = member = JSON.parse(member);
 
