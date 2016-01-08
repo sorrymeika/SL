@@ -4,22 +4,24 @@ using System.Linq;
 using System.Web;
 using System.Diagnostics;
 
-namespace INAnswer.Service
+namespace SL.Util
 {
     public class Rar
     {
-        public static void Decompress(string rarPath, string descDir)
+        public static string Decompress(string rarPath, string descDir, Action callback)
         {
-            if (!System.IO.File.Exists(rarPath))
-                return;
+            return Decompress("rar", rarPath, descDir, callback);
+        }
 
-            string rar = HttpContext.Current.Server.MapPath("~/Content/Rar.exe");
+        public static string Decompress(string rar, string rarPath, string descDir, Action callback)
+        {
             string arguments = " X -o+ " + rarPath + " " + descDir;
 
             var processStartInfo = new ProcessStartInfo(rar, arguments);
             processStartInfo.UseShellExecute = false;
             processStartInfo.RedirectStandardOutput = true;
             processStartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            string result = "";
 
             using (var process = new Process())
             {
@@ -29,7 +31,8 @@ namespace INAnswer.Service
                 while (true)
                 {
                     line = process.StandardOutput.ReadLine();
-                    if (line == "全部OK")
+                    result += line;
+                    if (line == "全部OK"||line == "全部完成")
                     {
                         break;
                     }
@@ -38,15 +41,21 @@ namespace INAnswer.Service
                         break;
                     }
                 }
+                callback();
             }
+            return result;
         }
 
-        public static void Compress(string dir, string descPath)
+        public static void Compress(string dir, string descPath, Action callback)
+        {
+            Compress("rar", dir, descPath, callback);
+        }
+
+        public static void Compress(string rar, string dir, string descPath,Action callback)
         {
             if (!System.IO.Directory.Exists(dir))
                 return;
 
-            string rar = HttpContext.Current.Server.MapPath("~/Content/Rar.exe");
             string arguments = " a -r -o+ " + descPath;
 
             var processStartInfo = new ProcessStartInfo(rar, arguments);
@@ -72,6 +81,7 @@ namespace INAnswer.Service
                         break;
                     }
                 }
+                callback();
             }
         }
     }

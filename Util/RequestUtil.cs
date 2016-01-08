@@ -5,6 +5,7 @@ using System.Web;
 using System.Collections.Specialized;
 using System.Text.RegularExpressions;
 using System.IO;
+using System.Web.Helpers;
 
 namespace SL.Util
 {
@@ -140,6 +141,18 @@ namespace SL.Util
         public String Email(string name, bool emptyAble = true, String emptyText = null)
         {
             return this.String(name, emptyAble, emptyText, @"^[-_a-zA-Z0-9\.]+@([-_a-zA-Z0-9]+\.)+[a-zA-Z0-9]{2,3}$", "邮箱地址格式错误");
+        }
+
+        public Dictionary<string, object> Dictionary(string name, bool emptyAble = true, String emptyText = null)
+        {
+            var str = this.String(name, emptyAble, emptyText, @"^\{.+\}$", "格式错误");
+
+            if (string.IsNullOrEmpty(str))
+            {
+                return null;
+            }
+
+            return Json.Decode<Dictionary<string, object>>(str);
         }
 
         public string Password(string name,

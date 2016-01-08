@@ -71,7 +71,10 @@
     <Compile Include="Util\HtmlUtil.cs" />
     <Compile Include="Util\ImageUtil.cs" />
     <Compile Include="Util\Md5.cs" />
+    <Compile Include="Util\Base64Util.cs" />
     <Compile Include="Util\RandomUtil.cs" />
+    <Compile Include="Util\PayUtil.cs" />
+    <Compile Include="Util\ZipUtil.cs" />
     <Compile Include="Util\Rar.cs" />
     <Compile Include="Util\RequestUtil.cs" />
     <Compile Include="Util\DateUtil.cs" />
@@ -103,6 +106,22 @@
     <Compile Include="Compression\Zip\ZipInputStream.cs" />
     <Compile Include="Compression\Zip\ZipNameTransform.cs" />
     <Compile Include="Compression\Zip\ZipOutputStream.cs" />
+    <Compile Include="WxPayAPI\business\DownloadBill.cs" />
+    <Compile Include="WxPayAPI\business\JsApiPay.cs" />
+    <Compile Include="WxPayAPI\business\MicroPay.cs" />
+    <Compile Include="WxPayAPI\business\NativeNotify.cs" />
+    <Compile Include="WxPayAPI\business\NativePay.cs" />
+    <Compile Include="WxPayAPI\business\OrderQuery.cs" />
+    <Compile Include="WxPayAPI\business\Refund.cs" />
+    <Compile Include="WxPayAPI\business\RefundQuery.cs" />
+    <Compile Include="WxPayAPI\business\ResultNotify.cs" />
+    <Compile Include="WxPayAPI\lib\Config.cs" />
+    <Compile Include="WxPayAPI\lib\Data.cs" />
+    <Compile Include="WxPayAPI\lib\Exception.cs" />
+    <Compile Include="WxPayAPI\lib\HttpService.cs" />
+    <Compile Include="WxPayAPI\lib\Log.cs" />
+    <Compile Include="WxPayAPI\lib\Notify.cs" />
+    <Compile Include="WxPayAPI\lib\WxPayApi.cs" />
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="Microsoft.Office.Core">

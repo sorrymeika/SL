@@ -39,6 +39,17 @@ namespace SL.Util
             return new Size(Convert.ToInt32(w), Convert.ToInt32(h));
         }
 
+        public static string ToBase64String(string path,int maxWidth=640) {
+
+            byte[] buffer;
+            using (Stream sm = System.IO.File.Open(path, FileMode.Open, FileAccess.Read))
+            {
+                buffer = ImageUtil.GetThumbNailImageBytes(sm, maxWidth, 0);
+            }
+
+            return "data:image/jpeg;base64," + Convert.ToBase64String(buffer);
+        }
+
 
         public static Image GetThumbNailImage(Image originalImage, int thumMaxWidth, int thumMaxHeight)
         {
